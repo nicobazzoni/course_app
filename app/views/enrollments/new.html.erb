@@ -1,0 +1,12 @@
+<h1>Enrollments#new</h1>
+
+
+<%= form_for @enrollment do |f| %>
+<%= f.label :course, :course_id %>
+<%= f.collection_select :course_id, Course.all, :id, :name %>
+<%= f.label :student_id %>
+<%= f.collection_select :student_id, Student.all, :id, :name %>
+<%= f.submit %>
+<% end %>
+
+
