@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'student#index'
+  
   resources :students
  resources :enrollments, only: [:new, :create, :destroy]
  
@@ -7,10 +7,12 @@ Rails.application.routes.draw do
  
  
 
-resources :sessions, only: [:create, :new, :destroy]
-get '/signup', to: 'users#new'
-get '/logout', to: 'sessions#destroy'
-get '/login', to: 'sessions#new'
+ get '/signup' => 'users#new'
+ post '/signup' => 'users#create'
+ get '/login' => 'sessions#new'
+ post '/login' => 'sessions#create'    
+ get '/logout' => 'sessions#destroy'
+ delete '/logout' => 'sessions#destroy'
 
 
 end

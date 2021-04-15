@@ -1,4 +1,3 @@
-
 class SessionsController < ApplicationController
   skip_before_action :login_required, :only => [:new, :create]
 
@@ -6,17 +5,19 @@ class SessionsController < ApplicationController
     @user = User.new
   end
 
-  def create
-    user = User.find_by_username(params[:username])
-      if user && user.authenticate(params[:password])
-        session[:user_id] = user.id
-        binding.pry
-        redirect_to student_path, :notice => " Welcome back, {user.username} "
-      else
-        flash.now.alert = " Invalid email or password "
-        render “new”
-      end
+  def create 
+    user = User.find_by(username: params[:user][:username])
+    if user && user.authenticate(params[:user][:password])
+  
+     session[:user_id]= user.id
+     redirect_to user_path(user)
+    else
+      flash.now[:danger] = 'Invalid email/password combination'
+      render 'new'
+    end
   end
+   
+
 
   def destroy
     session[:user_id] = nil

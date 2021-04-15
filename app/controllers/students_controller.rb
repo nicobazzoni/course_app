@@ -1,4 +1,5 @@
 class StudentsController < ApplicationController
+   
   skip_before_action :login_required, :only => [:index]
   def index
     @students = Student.all
@@ -9,7 +10,7 @@ class StudentsController < ApplicationController
   end
 
   def create
-    @student = Student.create(params.require(:student).permit(:name, :age))
+    @student = Student.new(student_params)
     if @student.valid?
       redirect_to students_path
     else
@@ -29,7 +30,7 @@ class StudentsController < ApplicationController
 
   def update
     @student = Student.find(params[:id])
-    @student.update(params.require(:student.permit(:name, :age, :avatar)))
+    @student.update(params.require(:student.permit(:username, :age, :avatar)))
     redirect_to_student_path
   end
 
@@ -41,8 +42,8 @@ class StudentsController < ApplicationController
 
   private 
 
-  def check_params
-    params.require(:student).permit(:name, :age, :avatar)
+  def student_params
+    params.require(:student).permit(:username, :password, :age, :avatar)
   end
 
 end

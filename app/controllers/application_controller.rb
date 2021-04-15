@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :login_required
+  include SessionsHelper
   def login_required
     if !logged_in?
           redirect_to login_path, :notice =>  " Log in to edit or delete your post "
