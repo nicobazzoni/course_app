@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  resources :users
+  resources :users 
+  
+  resources :enrollments 
+  
   resources :students
- resources :enrollments, only: [:new, :create, :destroy]
+   
  
  
 

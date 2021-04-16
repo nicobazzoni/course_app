@@ -7,15 +7,15 @@ class EnrollmentsController < ApplicationController
   end
 
   def create
-    @enrollment = Enrollment.create(params.require(:enrollment).permit(:course_id, :student_id))
-    redirect_to student_path(@enrollment.student)
+    @enrollment = Enrollment.create(params.require(:enrollment).permit(:course_id, :user_id, :description))
+    redirect_to user_path(@enrollment.user_id)
   end
 
   def destroy
     @enrollment = Enrollment.find(params[:id])
-    @student = @enrollment.student
+    @user = @enrollment.user
     @enrollment.destroy
-    redirect_to student_path(@student)
+    redirect_to user_path(@user)
 
   end
 end

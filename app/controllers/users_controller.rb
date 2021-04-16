@@ -1,33 +1,50 @@
 class UsersController < ApplicationController
+  skip_before_action :login_required, :only => [:index]
   
+  def index
+    @users = User.all
   
-  def index 
   end
-  
-  
-  def new 
+
+  def new
     @user = User.new
-  end 
+  end
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      log_in @user
-      flash[:success] = "Welcome to the app!"
-      redirect_to @user
+    if @user.valid?
+      redirect_to user_path
     else
-      render 'new'
+      flash[:errors] = @user.errors.full_messages
+      redirect_to new_user_path
     end
   end
 
-  def show
-    @user = User.find(params[:id])
+  def show 
+    @user = User.find_by_id(params[:id])
   end
 
-  private
+  def edit
+    @user = User.find(params[:id])
+   
+  end
+
+  def update
+    @user = User.find(params[:id])
+    @user.update(user_params) 
+    redirect_to user_path
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy 
+    redirect_to user_path
+  end
+
+  private 
+
   def user_params
     params.require(:user).permit(:username, :password, :avatar)
   end
 
-  
 end
