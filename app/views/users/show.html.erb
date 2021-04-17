@@ -20,14 +20,14 @@
 
 
       <h2> Courses </h2>
-<%= button_to "Register Course", new_enrollment_path, method: :get%>
+<%= button_to "Register Course", new_user_enrollment_path, method: :get%>
 <ul>
 
 <% @user.enrollments.each do |enrollment| %>
 <li> <%= enrollment.course.name%></li>
 <li> <%= enrollment.course.description%></li>
 
-<%= button_to "Drop Enrollment", enrollment_path(enrollment), method: :delete %>
+<%= button_to "Drop Enrollment", new_user_enrollment(enrollment), method: :delete %>
 <% end %>
 </ul>
 

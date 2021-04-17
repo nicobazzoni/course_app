@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   def login_required
     if !logged_in?
-          redirect_to login_path, :notice =>  " Log in to edit or delete your post "
+          redirect_to user_login_path, :notice =>  " Log in to edit or delete your post "
     end
   end
 

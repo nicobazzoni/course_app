@@ -3,12 +3,17 @@ class EnrollmentsController < ApplicationController
   end
 
   def new
-    @enrollment = Enrollment.new 
+    @enrollment = Enrollment.new
   end
 
   def create
-    @enrollment = Enrollment.create(params.require(:enrollment).permit(:course_id, :user_id, :description))
-    redirect_to user_path(@enrollment.user_id)
+    @enrollment = Enrollment.new(enrollment_params)
+    if @enrollment.valid?
+      redirect_to user_path
+    else
+      flash[:errors] = @enrollment.errors.full_messages
+      redirect_to new_user_path
+    end
   end
 
   def destroy
@@ -17,5 +22,10 @@ class EnrollmentsController < ApplicationController
     @enrollment.destroy
     redirect_to user_path(@user)
 
+  end
+
+  private
+  def enrollment_params
+    params.require(:enrollment).permit(:course_id, :user.id)
   end
 end
